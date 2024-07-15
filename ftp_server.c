@@ -61,20 +61,17 @@ int main(int argc, char *argv[]){
         error("Error on accept");
     }
 
-    while (1) {
-        bzero(buffer, 256);
-        int n = read(newsockfd, buffer, 255);
-        if (n < 0) {
-            error("Error on reading");
-        }
-        printf("Client: %s\n", buffer);
-        if (strncmp(buffer, "GET ", 4) == 0) {
-            char filename[256];
-            sscanf(buffer + 4, "%s", filename);
-            send_file(newsockfd, filename);
-        } else if (strncmp(buffer, "Bye", 3) == 0) {
-            break;
-        }
+    bzero(buffer, 256);
+    int n = read(newsockfd, buffer, 255);
+    if (n < 0) {
+        error("Error on reading");
+    }
+    printf("Client: %s\n", buffer);
+
+    if (strncmp(buffer, "GET ", 4) == 0) {
+        char filename[256];
+        sscanf(buffer + 4, "%s", filename);
+        send_file(newsockfd, filename);
     }
 
     close(newsockfd);
