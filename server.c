@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
             error("Error on reading");
         }
 
-        printf("Client: %s\n", buffer);
+        printf("Client: %s", buffer);
         bzero(buffer, 255);
         fgets(buffer, 255, stdin);
 
